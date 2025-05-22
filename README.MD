@@ -323,7 +323,7 @@ This project demonstrates several important techniques:
 
 ## 📜 License
 
-This project is provided for research and educational purposes. The DeepSeek models have their own licenses which should be respected when using them.
+This project is licensed under the MIT No Attribution License - see the [LICENSE](LICENSE) file for details.
 
 ## 👥 Contributing
 
@@ -498,8 +498,23 @@ python benchmark_model.py --model-path ./model_path --num-threads 4  # Adjust to
 
 ## License
 
-This project is provided for research and educational purposes. The DeepSeek models have their own licenses which should be respected when using them.
+This project is licensed under the MIT No Attribution License - see the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
 Contributions are welcome! See `CONTRIBUTING.md` for guidelines.
+
+## Why This Matters
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  🖥️  Run Advanced AI locally on your own hardware               │
+│  🔒  Keep your data private - no cloud required                 │
+│  💸  No subscription costs or API fees                          │
+│  🌱  Lower environmental impact than cloud inference            │
+│  🛠️  Full control over inference parameters                     │
+│  🚀  Deploy in resource-constrained environments                │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```

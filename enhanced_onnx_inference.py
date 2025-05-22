@@ -161,7 +161,8 @@ def run_diagnostics(model_path, tokenizer):
     print(f"PASS: Model file exists: {model_path} ({model_size_mb:.2f} MB)")
     
     # 2. Check configuration files
-    model_dir = os.path.dirname(model_path)    config_path = os.path.join(model_dir, "config.json")
+    model_dir = os.path.dirname(model_path)
+    config_path = os.path.join(model_dir, "config.json")
     ort_config_path = os.path.join(model_dir, "ort_config.json")
     
     if os.path.exists(config_path):
