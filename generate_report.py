@@ -158,9 +158,6 @@ def create_performance_charts(benchmark_data, output_dir):
                         errors.append(prompt_data["first_token_time"]["std"])
                 
                 if prompt_types:
-                    print(f"[DEBUG] prompt_types: {prompt_types}")
-                    print(f"[DEBUG] latencies: {latencies} (len={len(latencies)})")
-                    print(f"[DEBUG] errors: {errors} (len={len(errors)})")
                     ax = sns.barplot(x=prompt_types, y=latencies, color='b')
                     # Add error bars if appropriate
                     if len(errors) == len(latencies) and len(latencies) > 1:

@@ -1,14 +1,4 @@
-# 🧠 DeepSeek Model Quantization and Testing Framework 🚀
-
-```
- _____                 _____           _      ___  _   _ _   _ _____ ___ ________  ______ 
-|  __ \               / ____|         | |    / _ \| \ | | \ | |_   _/ _ \__  / _ \|___  /
-| |  | | ___  ___ ___| (___   ___  ___| | __| | | |  \| |  \| | | || | | |/ / | | |  / / 
-| |  | |/ _ \/ _ \_  /\___ \ / _ \/ _ \ |/ /| | | | . ` | . ` | | || | | / /| | | | / /  
-| |__| |  __/  __// / ____) |  __/  __/   < | |_| | |\  | |\  |_| || |_| / /_| |_| / /__ 
-|_____/ \___|\___/___|_____/ \___|\___|_|\_(_)___/|_| \_|_| \_|_____\___/____|\___/_____|
-                                                                                        
-```
+# Optimizing DeepSeek: Int4 Quantization & Local Inference Engine 🚀
 
 This project provides tools for quantizing and testing large language models from the DeepSeek family, specifically focusing on the DeepSeek-R1-Distill-Qwen-1.5B model. The primary goal is to make these models more accessible by reducing their memory footprint through quantization to Int4 precision and ONNX format conversion.
 
@@ -51,7 +41,7 @@ DeepSeek-R1-**Distill**-Qwen-1.5B is already a distilled model that learned from
 
 ```powershell
 # Clone the repository (if you haven't already)
-git clone https://github.com/yourusername/VibeCollection.git
+git clone https://github.com/shyamsridhar123/Quantization
 cd VibeCollection/quantization
 
 # Create and activate a virtual environment (recommended)
@@ -204,7 +194,7 @@ Quantization in this repository follows this process:
 ┌─────────────────────────────────────────────┐
 │ 1. Export to ONNX                           │
 │    - Convert model architecture to ONNX     │
-│    - Add position_ids input (required fix)  │
+│    - Add position_ids input (required fix) │
 └─────────────────────────────────────────────┘
                          ⬇️
 ┌─────────────────────────────────────────────┐
