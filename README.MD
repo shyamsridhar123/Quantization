@@ -502,7 +502,7 @@ python benchmark_model.py --model-path ./model_path --num-threads 4  # Adjust to
 
 ## License
 
-This project is licensed under the MIT No Attribution License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
