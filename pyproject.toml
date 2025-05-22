@@ -28,20 +28,25 @@ classifiers = [
 keywords = ["llm", "deepseek", "quantization", "qlora", "finetuning", "nlp", "ai"]
 
 dependencies = [
-    "torch",
+    "torch>=2.0.0",
     "torchvision",
     "torchaudio",
     "transformers==4.38.2", # Pinned for stability as noted in fine-tuning notebook
     "datasets",
     "peft",
     "accelerate",
-    "bitsandbytes",
+    "bitsandbytes>=0.41.0",  # For 4-bit quantization
     "trl",
     "sentencepiece",
     "scipy",
     "jupyterlab", # For running notebooks
     "ipykernel",  # For Jupyter kernel
-    # Add other direct dependencies here
+    "optimum>=1.14.0",  # For ONNX quantization
+    "onnx>=1.14.0",  # ONNX format support
+    "onnxruntime>=1.16.0",  # ONNX runtime for CPU/GPU inference
+    "numpy>=1.24.0",
+    "tqdm",  # For progress bars
+    "colorama",  # For colored terminal output
 ]
 
 [project.urls]

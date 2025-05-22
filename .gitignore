@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python distribution / packaging
+*.egg-info/
+.eggs/
+*.egg
+dist/
+build/
+downloads/
+eggs/
+.parts/
+bin/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Model files and directories
+quantized_model/
+onnx_exported/
+test_onnx_export/
+test_quant/
+onnx_fixed/
+
+# Generated results
+inference_results/
+
+# Environment-specific setup files
+setup_conda_env.ps1
+setup_env.ps1
+find_conda.ps1
+install_updated_packages.ps1
+
+# Archive directory
+archive/
+
+# Models and large files
+*.onnx
+*.bin
+*.pt
+*.pth
+*.safetensors
+
+# Local environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db

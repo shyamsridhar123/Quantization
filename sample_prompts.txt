@@ -1,0 +1,20 @@
+The capital of France is
+Who was the first person to walk on the moon?
+Write a short poem about artificial intelligence
+Explain quantum computing in simple terms
+What are the benefits of quantizing large language models?
+Translate this sentence to French: "The weather is beautiful today"
+Write a function in Python to check if a string is a palindrome
+Compare and contrast deep learning and machine learning
+What is the greenhouse effect and how does it impact climate change?
+Summarize the plot of Romeo and Juliet in a few sentences
+What is the ONNX format and why is it used for model deployment?
+How does quantization affect model performance and accuracy?
+Implement a binary search algorithm in C++
+What are the main features of the DeepSeek-R1-Distill-Qwen-1.5B model?
+List three advantages and three disadvantages of model quantization
+What is the difference between dynamic and static quantization?
+Explain the difference between Int4 and Int8 quantization
+How do transformer-based models handle long context windows?
+Give a brief overview of ONNX Runtime and its optimization techniques
+If a model is trained on English data, how well can it perform in other languages?

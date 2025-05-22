@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quantized Model Evaluation Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; color: #333; }
+        h1, h2, h3 { color: #0066cc; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section { margin-bottom: 30px; border: 1px solid #ddd; padding: 20px; border-radius: 5px; }
+        .summary { background-color: #f9f9f9; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #0066cc; color: white; }
+        tr:hover { background-color: #f5f5f5; }
+        .chart { margin: 20px 0; text-align: center; }
+        .error { color: #cc0000; }
+        .success { color: #007700; }
+        .prompt-box { border-left: 4px solid #0066cc; padding-left: 15px; margin: 15px 0; }
+        .response-box { background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .metrics { display: flex; justify-content: space-around; flex-wrap: wrap; }
+        .metric-card { background-color: #f0f7ff; border-radius: 5px; padding: 15px; margin: 10px; min-width: 200px; text-align: center; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #0066cc; }
+        .footer { text-align: center; margin-top: 30px; color: #777; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DeepSeek-R1-Distill-Qwen-1.5B Quantized Model Evaluation</h1>
+        <p>Report generated on 2025-05-22 00:04:06</p>
+        
+        <div class="section summary">
+            <h2>Model Summary</h2>
+            <div class="metrics">
+                <div class="metric-card">
+                    <h3>Model Size</h3>
+                    <div class="metric-value">1701.09 MB</div>
+                    <p>Quantized ONNX Model</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Precision</h3>
+                    <div class="metric-value">Int4</div>
+                    <p>Quantization Level</p>
+                </div>
+                <div class="metric-card">
+                    <h3>Files</h3>
+                    <div class="metric-value">3</div>
+                    <p>Total Model Files</p>
+                </div>
+            </div>
+
+            <div class="metrics">
+                <div class="metric-card">
+                    <h3>Generation Speed</h3>
+                    <div class="metric-value">3.41</div>
+                    <p>Tokens per Second</p>
+                </div>
+                <div class="metric-card">
+                    <h3>First Token Latency</h3>
+                    <div class="metric-value">0.2108s</div>
+                    <p>Average Response Time</p>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="section">
+            <h2>Diagnostic Results</h2>
+
+        </div>
+        
+        <div class="section">
+            <h2>Performance Analysis</h2>
+
+            <div class="chart">
+                <h3>First Token Latency</h3>
+                <img src="charts\first_token_latency_0.png" alt="First Token Latency" style="max-width: 100%;">
+            </div>
+
+            <div class="chart">
+                <h3>Generation Throughput</h3>
+                <img src="charts\generation_throughput_0.png" alt="Generation Throughput" style="max-width: 100%;">
+            </div>
+
+            <h3>Benchmark Run 1</h3>
+
+            <h4>First Token Latency</h4>
+            <table>
+                <tr>
+                    <th>Prompt Type</th>
+                    <th>Input Tokens</th>
+                    <th>Avg Time (s)</th>
+                    <th>Min Time (s)</th>
+                    <th>Max Time (s)</th>
+                </tr>
+
+                <tr>
+                    <td>short</td>
+                    <td>8</td>
+                    <td>0.1470 ± 0.0355</td>
+                    <td>0.1192</td>
+                    <td>0.2115</td>
+                </tr>
+                <tr>
+                    <td>medium</td>
+                    <td>17</td>
+                    <td>0.1656 ± 0.0055</td>
+                    <td>0.1590</td>
+                    <td>0.1748</td>
+                </tr>
+                <tr>
+                    <td>long</td>
+                    <td>41</td>
+                    <td>0.3200 ± 0.0113</td>
+                    <td>0.3009</td>
+                    <td>0.3352</td>
+                </tr>
+            </table>
+
+            <h4>Text Generation Performance</h4>
+            <table>
+                <tr>
+                    <th>Prompt Type</th>
+                    <th>Tokens Generated</th>
+                    <th>Time (s)</th>
+                    <th>Tokens/Second</th>
+                </tr>
+
+                <tr>
+                    <td>short</td>
+                    <td>50.0</td>
+                    <td>11.5916</td>
+                    <td>4.31</td>
+                </tr>
+                <tr>
+                    <td>medium</td>
+                    <td>50.0</td>
+                    <td>12.8445</td>
+                    <td>3.89</td>
+                </tr>
+                <tr>
+                    <td>long</td>
+                    <td>50.0</td>
+                    <td>24.6149</td>
+                    <td>2.03</td>
+                </tr>
+            </table>
+
+        <div class="section">
+            <h2>Model Configuration</h2>
+            <table>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                </tr>
+
+                <tr>
+                    <td>attention_dropout</td>
+                    <td>0.0</td>
+                </tr>
+                <tr>
+                    <td>bos_token_id</td>
+                    <td>151643</td>
+                </tr>
+                <tr>
+                    <td>eos_token_id</td>
+                    <td>151643</td>
+                </tr>
+                <tr>
+                    <td>hidden_act</td>
+                    <td>silu</td>
+                </tr>
+                <tr>
+                    <td>hidden_size</td>
+                    <td>1536</td>
+                </tr>
+                <tr>
+                    <td>initializer_range</td>
+                    <td>0.02</td>
+                </tr>
+                <tr>
+                    <td>intermediate_size</td>
+                    <td>8960</td>
+                </tr>
+                <tr>
+                    <td>max_position_embeddings</td>
+                    <td>131072</td>
+                </tr>
+                <tr>
+                    <td>max_window_layers</td>
+                    <td>21</td>
+                </tr>
+                <tr>
+                    <td>model_type</td>
+                    <td>qwen2</td>
+                </tr>
+                <tr>
+                    <td>num_attention_heads</td>
+                    <td>12</td>
+                </tr>
+                <tr>
+                    <td>num_hidden_layers</td>
+                    <td>28</td>
+                </tr>
+                <tr>
+                    <td>num_key_value_heads</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>rms_norm_eps</td>
+                    <td>1e-06</td>
+                </tr>
+                <tr>
+                    <td>rope_scaling</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td>rope_theta</td>
+                    <td>10000</td>
+                </tr>
+                <tr>
+                    <td>sliding_window</td>
+                    <td>4096</td>
+                </tr>
+                <tr>
+                    <td>tie_word_embeddings</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>torch_dtype</td>
+                    <td>bfloat16</td>
+                </tr>
+                <tr>
+                    <td>transformers_version</td>
+                    <td>4.52.1</td>
+                </tr>
+                <tr>
+                    <td>use_cache</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>use_mrope</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>use_sliding_window</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>vocab_size</td>
+                    <td>151936</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>Generated with the DeepSeek-R1-Distill-Qwen-1.5B Model Evaluation Framework</p>
+        </div>
+    </div>
+</body>
+</html>

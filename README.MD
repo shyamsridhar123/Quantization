@@ -1,124 +1,515 @@
-# DeepSeek Model Quantization and Fine-Tuning
+# 🧠 DeepSeek Model Quantization and Testing Framework 🚀
 
-This project explores techniques for quantizing and fine-tuning large language models from the DeepSeek family, specifically focusing on models around the 1.5B parameter range. The primary goal is to make these models more accessible by reducing their memory footprint and enabling efficient fine-tuning on consumer-grade hardware.
+```
+ _____                 _____           _      ___  _   _ _   _ _____ ___ ________  ______ 
+|  __ \               / ____|         | |    / _ \| \ | | \ | |_   _/ _ \__  / _ \|___  /
+| |  | | ___  ___ ___| (___   ___  ___| | __| | | |  \| |  \| | | || | | |/ / | | |  / / 
+| |  | |/ _ \/ _ \_  /\___ \ / _ \/ _ \ |/ /| | | | . ` | . ` | | || | | / /| | | | / /  
+| |__| |  __/  __// / ____) |  __/  __/   < | |_| | |\  | |\  |_| || |_| / /_| |_| / /__ 
+|_____/ \___|\___/___|_____/ \___|\___|_|\_(_)___/|_| \_|_| \_|_____\___/____|\___/_____|
+                                                                                        
+```
 
-## Project Overview
+This project provides tools for quantizing and testing large language models from the DeepSeek family, specifically focusing on the DeepSeek-R1-Distill-Qwen-1.5B model. The primary goal is to make these models more accessible by reducing their memory footprint through quantization to Int4 precision and ONNX format conversion.
 
-The repository contains Jupyter notebooks and Python scripts demonstrating:
+## 🔥 What is Model Quantization & Distillation? 🔥
 
-1.  **Model Quantization (`quant1.ipynb`, `load_quantized_model.py`):**
-    *   Loading pre-trained DeepSeek models (e.g., `deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B`, `deepseek-ai/deepseek-coder-1.3b-instruct`) directly in 4-bit or 8-bit precision using the `bitsandbytes` library.
-    *   Options for running on CUDA-enabled GPUs or CPU (default precision for CPU).
-    *   Basic inference tests to verify model loading and generation capabilities.
+### 📊 Quantization Explained
 
-2.  **Parameter-Efficient Fine-Tuning with QLoRA (`fine_tune_deepseek_qlora.ipynb`):**
-    *   Fine-tuning the `deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B` model using QLoRA (Quantized Low-Rank Adaptation).
-    *   Loading the base model in 4-bit precision.
-    *   Configuring and applying LoRA adapters using the `peft` library.
-    *   Training the model on a custom (dummy) instruction dataset using the `SFTTrainer` from the `trl` library.
-    *   Saving the fine-tuned LoRA adapter and performing inference with the adapted model.
+**Quantization** reduces the precision of numerical values in neural networks:
 
-## Key Technologies Used
+```
+FP32 (32-bit) ➡️ INT8 (8-bit) ➡️ INT4 (4-bit)
+   ┌─────────┐      ┌─────┐       ┌───┐
+   │111010101│  →   │10101│  →    │1010│
+   └─────────┘      └─────┘       └───┘
+  More Precise       Smaller      Tiny!
+  (~6GB model)      (~1.5GB model)  (~1.7GB model)
+```
 
-*   **Python 3.8+**
-*   **PyTorch:** Core deep learning framework.
-*   **Hugging Face `transformers`:** For accessing pre-trained models, tokenizers, and training utilities.
-*   **Hugging Face `datasets`:** For loading and processing datasets.
-*   **Hugging Face `peft` (Parameter-Efficient Fine-Tuning):** For LoRA implementation.
-*   **Hugging Face `trl` (Transformer Reinforcement Learning):** For `SFTTrainer`.
-*   **`bitsandbytes`:** For 4-bit/8-bit quantization (NF4, FP4) and QLoRA support.
-*   **`accelerate`:** For efficient hardware utilization and distributed training.
-*   **Jupyter Notebooks:** For interactive development and experimentation.
+Quantization **dramatically reduces** model size and memory footprint while attempting to preserve model quality!
 
-## Prerequisites
+### 🧪 Distillation Explained 
 
-Before running the notebooks or scripts, ensure you have the following:
+**Distillation** is where a smaller model (student) learns from a larger model (teacher):
 
-1.  **Python Environment:** Python 3.8 or newer. It's highly recommended to use a virtual environment (e.g., `venv`, `conda`).
-    ```bash
-    python -m venv .venv
-    # On Windows
-    .\.venv\Scripts\activate
-    # On macOS/Linux
-    # source .venv/bin/activate
-    ```
+```
+       Teacher Model              Student Model
+       (Large, Slow)            (Small, Fast)
+       ┌───────────┐              ┌─────┐
+       │           │     →        │     │
+       │  7B-175B  │  Knowledge   │ 1-3B│
+       │ Parameters│  Transfer    │Params│
+       └───────────┘              └─────┘
+```
 
-2.  **NVIDIA GPU with CUDA (Recommended for Quantization & Fine-tuning):**
-    *   Ensure you have an NVIDIA GPU with a compatible CUDA toolkit version installed.
-    *   QLoRA and `bitsandbytes` 4-bit/8-bit quantization are primarily designed for and most effective on NVIDIA GPUs.
+DeepSeek-R1-**Distill**-Qwen-1.5B is already a distilled model that learned from larger models!
 
-3.  **Required Python Libraries:**
-    You can install the necessary libraries by running the installation cells within the Jupyter notebooks or by using pip:
-    ```bash
-    # For PyTorch (adjust CUDA version if needed, e.g., cu118, cu121)
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+## 🚀 Quick Start Guide
 
-    # For transformers, PEFT, TRL, bitsandbytes, etc.
-    pip install transformers datasets peft accelerate bitsandbytes trl sentencepiece scipy
-    ```
-    *Note: `bitsandbytes` installation can sometimes be tricky, especially on Windows. Ensure your PyTorch and CUDA versions are compatible.*
+### 1. 🛠️ Setup Environment
 
-## How to Use
+```powershell
+# Clone the repository (if you haven't already)
+git clone https://github.com/yourusername/VibeCollection.git
+cd VibeCollection/quantization
 
-### 1. Model Quantization and Basic Inference
+# Create and activate a virtual environment (recommended)
+python -m venv .venv
+.\.venv\Scripts\activate  # On Windows
 
-*   **Jupyter Notebook: `quant1.ipynb`**
-    *   Open and run the cells sequentially.
-    *   Configure `MODEL_ID`, `USE_CUDA`, and `QUANTIZATION_BITS` in the configuration cell.
-    *   This notebook demonstrates loading a model (e.g., `deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B`) with 4-bit or 8-bit quantization and performing a simple inference test.
+# Install dependencies
+pip install -r requirements.txt
+```
 
-*   **Python Script: `load_quantized_model.py`**
-    *   Modify the `MODEL_ID` variable in the script if needed.
-    *   Run from the terminal:
-        ```bash
-        python load_quantized_model.py
-        ```
-    *   This script loads a specified model in 4-bit precision and performs a basic inference.
+### 2. 🌟 Export and Quantize the Model
 
-### 2. Fine-tuning with QLoRA
+```powershell
+# Export the model to ONNX with position_ids support (fixes common 'logits' errors)
+python reexport_with_position_ids.py --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B --output-dir ./onnx_fixed --quantize
 
-*   **Jupyter Notebook: `fine_tune_deepseek_qlora.ipynb`**
-    *   Open and run the cells sequentially.
-    *   **Configuration:**
-        *   Verify/update `BASE_MODEL_ID`.
-        *   Modify LoRA parameters (`LORA_R`, `LORA_ALPHA`, `LORA_TARGET_MODULES`) and training arguments (`BATCH_SIZE`, `LEARNING_RATE`, `NUM_TRAIN_EPOCHS`, etc.) as needed.
-    *   **Dataset:** The notebook uses a small, dummy instruction dataset created in the script. For actual fine-tuning, replace this with your custom dataset. Ensure your dataset is formatted appropriately (e.g., JSONL with a "text" field containing formatted instruction-response pairs, or separate instruction/output columns for use with a `formatting_func`).
-    *   The notebook guides through:
-        *   Loading the base model in 4-bit.
-        *   Setting up LoRA configuration.
-        *   Training using `SFTTrainer`.
-        *   Saving the trained LoRA adapter.
-        *   Performing inference with the fine-tuned model.
+# Alternatively, use the Jupyter notebooks for more control:
+jupyter notebook notebooks/quantize_int4.ipynb
+```
 
-## Models
+### 3. 🔍 Test the Quantized Model
 
-The primary models explored in this project include:
+```powershell
+# Interactive testing with direct ONNX Runtime approach
+python direct_interactive_test.py --model-path ./quantized_model/onnx_int4
 
-*   `deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B`
-*   `deepseek-ai/deepseek-coder-1.3b-instruct` (or similar 1.3B/1.5B DeepSeek variants)
+# Or run the full test suite
+.\run_inference_tests.ps1
+```
 
-Please ensure you have accepted any necessary terms and conditions on the Hugging Face Hub for these models if required.
+### 4. 📊 Benchmark Performance
 
-## Future Exploration
+```powershell
+# Run performance benchmarks
+python benchmark_model.py --model-path ./quantized_model/onnx_int4/model_quantized.onnx --num-threads 4
+```
 
-*   **Experiment with different quantization methods:** Explore other PTQ techniques (e.g., GPTQ, AWQ) if direct `bitsandbytes` loading doesn't meet accuracy/performance needs.
-*   **Advanced PEFT techniques:** Investigate other PEFT methods beyond LoRA.
-*   **Comprehensive evaluation:** Implement robust evaluation metrics for both the quantized and fine-tuned models on relevant benchmarks or tasks.
-*   **CPU optimization:** For CPU-bound scenarios, explore quantization techniques like `torch.quantization` or ONNX Runtime quantization.
-*   **Larger datasets for fine-tuning:** Use more extensive and diverse datasets for more impactful fine-tuning.
-*   **Hyperparameter optimization:** Systematically tune hyperparameters for both quantization and fine-tuning to achieve optimal results.
+### 5. 🔧 Troubleshooting
 
-## Troubleshooting
+If you encounter issues:
 
-*   **CUDA/`bitsandbytes` errors:**
-    *   Ensure your NVIDIA drivers, CUDA toolkit, and PyTorch (with CUDA support) versions are compatible.
-    *   `bitsandbytes` often requires specific versions to work correctly. Check its documentation for compatibility.
-    *   On Windows, `bitsandbytes` can be particularly challenging. Look for pre-compiled binaries or community-provided solutions if you encounter issues.
-*   **Out Of Memory (OOM) errors:**
-    *   Reduce `BATCH_SIZE` or `MICRO_BATCH_SIZE`.
-    *   Decrease `MAX_SEQ_LENGTH`.
-    *   Use gradient accumulation (`GRADIENT_ACCUMULATION_STEPS`).
-    *   Ensure you are using 4-bit quantization correctly for QLoRA.
-*   **Model ID not found:** Double-check the model identifiers on Hugging Face Hub.
+```powershell
+# Run diagnostics
+python diagnose_onnx_model.py --model-path ./quantized_model/onnx_int4/model_quantized.onnx
 
-Contributions and suggestions are welcome!
+# Try direct ONNX inference if Optimum integration fails
+python enhanced_onnx_inference.py --model-path ./quantized_model/onnx_int4/model_quantized.onnx
+```
+
+## 🌈 Why Quantize Models? 🌈
+
+Quantizing models provides these amazing benefits:
+
+```
+┌─────────────────────────────────────┐
+│ 🚀 8x Smaller File Size             │
+│ 💾 ~70-75% Less Memory Usage        │
+│ ⚡ Faster Inference Speed            │
+│ 🖥️ Run on Consumer Hardware         │
+│ 🔋 Lower Energy Consumption         │
+│ 🏠 Enable Edge & Local Deployment   │
+└─────────────────────────────────────┘
+```
+
+## 📝 Complete Workflow
+
+### Step 1: 🧰 Prepare Your Environment
+
+1. **Install Required Dependencies**:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+2. **Verify Environment Setup**:
+   ```powershell
+   python environment_check.py
+   ```
+
+### Step 2: 🔄 Export and Quantize the Model
+
+1. **Re-Export Model with Position IDs** (Recommended for Qwen2-based models):
+   ```powershell
+   python reexport_with_position_ids.py --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B --output-dir ./onnx_fixed
+   ```
+
+2. **Quantize the Model to Int4**:
+   ```powershell
+   # Either use the re-exported model with quantization flag:
+   python reexport_with_position_ids.py --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B --output-dir ./onnx_fixed --quantize
+   
+   # Or run the dedicated quantization script:
+   python run_quantization.py --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B --output-dir ./quantized_model/onnx_int4
+   
+   # For more control, use the Jupyter notebook:
+   jupyter notebook notebooks/quantize_int4.ipynb
+   ```
+
+### Step 3: 🧪 Test the Quantized Model
+
+1. **Run Diagnostics**:
+   ```powershell
+   python diagnose_onnx_model.py --model-path ./quantized_model/onnx_int4/model_quantized.onnx
+   ```
+
+2. **Interactive Testing**:
+   ```powershell
+   # Recommended approach (handles common issues):
+   python direct_interactive_test.py --model-path ./quantized_model/onnx_int4
+   
+   # Alternative approach using Optimum:
+   python interactive_test.py --model-path ./quantized_model/onnx_int4
+   ```
+
+3. **Batch Testing with Multiple Prompts**:
+   ```powershell
+   .\run_inference_tests.ps1
+   ```
+
+### Step 4: 📈 Benchmark and Compare
+
+1. **Performance Benchmarking**:
+   ```powershell
+   python benchmark_model.py --model-path ./quantized_model/onnx_int4/model_quantized.onnx --num-threads 4
+   ```
+
+2. **Compare with Original Model** (Optional):
+   ```powershell
+   python compare_models.py --quantized-path ./quantized_model/onnx_int4 --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
+   ```
+
+3. **Generate HTML Report**:
+   ```powershell
+   python generate_report.py --results-dir ./inference_results --model-path ./quantized_model/onnx_int4 --output-file ./model_report.html
+   ```
+
+### Step 5: 🔄 Format Conversion (Optional)
+
+1. **Convert to FP16 for Troubleshooting**:
+   ```powershell
+   python convert_to_fp16.py --input-model ./quantized_model/onnx_int4/model_quantized.onnx --output-model ./quantized_model/onnx_fp16/model_fp16.onnx
+   ```
+
+## 🔍 Quantization Deep Dive
+
+Quantization in this repository follows this process:
+
+```
+                 Original Model (FP32)
+                         ⬇️
+┌─────────────────────────────────────────────┐
+│ 1. Export to ONNX                           │
+│    - Convert model architecture to ONNX     │
+│    - Add position_ids input (required fix)  │
+└─────────────────────────────────────────────┘
+                         ⬇️
+┌─────────────────────────────────────────────┐
+│ 2. Calibration                              │
+│    - Analyze weight distributions           │
+│    - Determine optimal scaling factors      │
+└─────────────────────────────────────────────┘
+                         ⬇️
+┌─────────────────────────────────────────────┐
+│ 3. INT4 Quantization                        │
+│    - Apply scaling to weights               │
+│    - Convert FP32 values to INT4 values     │
+│    - Store quantization parameters          │
+└─────────────────────────────────────────────┘
+                         ⬇️
+┌─────────────────────────────────────────────┐
+│ 4. Optimization                             │
+│    - Apply ONNX Runtime optimizations       │
+│    - Fuse operations where possible         │
+└─────────────────────────────────────────────┘
+                         ⬇️
+                 Quantized Model (INT4)
+```
+
+## 🏗️ Project Structure
+
+### 🧩 Key Components
+
+- **🔧 Quantization Tools**: Scripts and notebooks for exporting and quantizing models
+- **🧪 Testing Framework**: Tools for testing, benchmarking, and troubleshooting the quantized models
+- **🧹 Maintenance Utilities**: Scripts for project organization and cleanup
+
+### 📄 Important Scripts
+
+#### 🔄 Quantization and Export
+- `reexport_with_position_ids.py` - 🛠️ Exports the model with position_ids (fixes 'logits' errors)
+- `run_quantization.py` - 🔢 Dedicated quantization script
+- `quantize_int4.ipynb` - 📓 Jupyter notebook for Int4 quantization
+
+#### 🧪 Testing and Inference
+- `direct_interactive_test.py` - 💬 Interactive testing using direct ONNX Runtime (most reliable)
+- `interactive_test.py` - 🤖 Interactive testing using Optimum integration
+- `diagnose_onnx_model.py` - 🔍 Detailed diagnostic checks for model issues
+- `enhanced_onnx_inference.py` - ⚡ Direct ONNX Runtime inference with diagnostics
+- `benchmark_model.py` - 📊 Performance benchmarking across different input sizes
+
+#### 🔄 Execution Scripts
+- `run_inference_tests.ps1` - 🧪 Comprehensive testing suite
+- `run_master_test.ps1` - 🚀 Runs all tests in sequence
+
+#### 🧹 Maintenance
+- `maintain.bat` - 🛠️ Central maintenance dashboard with menu options
+- `cleanup_simple.ps1` - 🧹 Removes temporary files and Python cache
+
+## ❓ Common Issues and Solutions
+
+### 1. 'Logits' Error During Generation ❌
+
+**Symptom**: `KeyError: 'logits'` or similar errors during model inference.
+
+**Solution**: The model was likely exported without position_ids input. Re-export the model with:
+```powershell
+python reexport_with_position_ids.py --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B --output-dir ./onnx_fixed
+```
+
+### 2. Model Loading Failures ❌
+
+**Symptom**: Model fails to load or initialize.
+
+**Solution**: Try using different loading parameters:
+```python
+# For Qwen2-based models
+session_options = ort.SessionOptions()
+session_options.intra_op_num_threads = 4
+session = ort.InferenceSession(model_path, session_options)
+```
+
+### 3. Performance Issues ⏱️
+
+**Symptom**: Slow inference or high memory usage.
+
+**Solution**: Adjust thread count to match your CPU cores:
+```powershell
+python benchmark_model.py --model-path ./model_path --num-threads 4  # Adjust to your CPU
+```
+
+## ⚙️ Configuration Options
+
+- **🧵 Thread Count**: Adjust `--num-threads` based on your CPU. Generally, setting it to the number of physical cores works best.
+- **🔢 Token Limit**: Use `--max-tokens` to control generation length.
+- **📁 Model Path**: All scripts accept `--model-path` to specify the model location.
+
+## 📚 The Technical Significance of This Project
+
+This project demonstrates several important techniques:
+
+```
+┌─────────────────────────────────────────────────┐
+│ 🚀 ONNX Conversion                              │
+│   - Hardware-agnostic deployment                │
+│   - Runtime optimizations for any hardware      │
+├─────────────────────────────────────────────────┤
+│ 🧮 INT4 Quantization                            │
+│   - Aggressive compression (8x smaller)         │
+│   - 1.7GB model size (vs ~6GB for FP32)        │
+│   - 1.5B parameters with vocabulary of 151,936  │
+│   - Carefully preserves model quality           │
+├─────────────────────────────────────────────────┤
+│ 🔧 Architecture-Specific Fixes                  │
+│   - Fixes for Qwen2 architecture               │
+│   - Custom position_ids handling               │
+├─────────────────────────────────────────────────┤
+│ 📊 Comprehensive Benchmarking                   │
+│   - Performance across different inputs         │
+│   - 2-4 tokens/sec generation speed            │
+│   - 147-320ms first token latency              │
+│   - Quality comparison with original            │
+└─────────────────────────────────────────────────┘
+```
+
+## 🔗 Resources
+
+- [ONNX Runtime Documentation](https://onnxruntime.ai/) 📚
+- [Optimum Documentation](https://huggingface.co/docs/optimum/index) 🤗
+- [DeepSeek-R1 Model Card](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B) 🧠
+
+## 📜 License
+
+This project is provided for research and educational purposes. The DeepSeek models have their own licenses which should be respected when using them.
+
+## 👥 Contributing
+
+Contributions are welcome! See `CONTRIBUTING.md` for guidelines. 🌟
+
+## ✨ Why This Matters
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  🖥️  Run Advanced AI locally on your own hardware               │
+│  🔒  Keep your data private - no cloud required                 │
+│  💸  No subscription costs or API fees                          │
+│  🌱  Lower environmental impact than cloud inference            │
+│  🛠️  Full control over inference parameters                     │
+│  🚀  Deploy in resource-constrained environments                │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Complete Workflow
+
+### Step 1: Prepare Your Environment
+
+1. **Install Required Dependencies**:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+2. **Verify Environment Setup**:
+   ```powershell
+   python environment_check.py
+   ```
+
+### Step 2: Export and Quantize the Model
+
+1. **Re-Export Model with Position IDs** (Recommended for Qwen2-based models):
+   ```powershell
+   python reexport_with_position_ids.py --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B --output-dir ./onnx_fixed
+   ```
+
+2. **Quantize the Model to Int4**:
+   ```powershell
+   # Either use the re-exported model with quantization flag:
+   python reexport_with_position_ids.py --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B --output-dir ./onnx_fixed --quantize
+   
+   # Or run the dedicated quantization script:
+   python run_quantization.py --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B --output-dir ./quantized_model/onnx_int4
+   
+   # For more control, use the Jupyter notebook:
+   jupyter notebook notebooks/quantize_int4.ipynb
+   ```
+
+### Step 3: Test the Quantized Model
+
+1. **Run Diagnostics**:
+   ```powershell
+   python diagnose_onnx_model.py --model-path ./quantized_model/onnx_int4/model_quantized.onnx
+   ```
+
+2. **Interactive Testing**:
+   ```powershell
+   # Recommended approach (handles common issues):
+   python direct_interactive_test.py --model-path ./quantized_model/onnx_int4
+   
+   # Alternative approach using Optimum:
+   python interactive_test.py --model-path ./quantized_model/onnx_int4
+   ```
+
+3. **Batch Testing with Multiple Prompts**:
+   ```powershell
+   .\run_inference_tests.ps1
+   ```
+
+### Step 4: Benchmark and Compare
+
+1. **Performance Benchmarking**:
+   ```powershell
+   python benchmark_model.py --model-path ./quantized_model/onnx_int4/model_quantized.onnx --num-threads 4
+   ```
+
+2. **Compare with Original Model** (Optional):
+   ```powershell
+   python compare_models.py --quantized-path ./quantized_model/onnx_int4 --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
+   ```
+
+3. **Generate HTML Report**:
+   ```powershell
+   python generate_report.py --results-dir ./inference_results --model-path ./quantized_model/onnx_int4 --output-file ./model_report.html
+   ```
+
+### Step 5: Format Conversion (Optional)
+
+1. **Convert to FP16 for Troubleshooting**:
+   ```powershell
+   python convert_to_fp16.py --input-model ./quantized_model/onnx_int4/model_quantized.onnx --output-model ./quantized_model/onnx_fp16/model_fp16.onnx
+   ```
+
+## Project Structure
+
+### Key Components
+
+- **Quantization Tools**: Scripts and notebooks for exporting and quantizing models
+- **Testing Framework**: Tools for testing, benchmarking, and troubleshooting the quantized models
+- **Maintenance Utilities**: Scripts for project organization and cleanup
+
+### Important Scripts
+
+#### Quantization and Export
+- `reexport_with_position_ids.py` - Exports the model with position_ids (fixes 'logits' errors)
+- `run_quantization.py` - Dedicated quantization script
+- `quantize_int4.ipynb` - Jupyter notebook for Int4 quantization
+
+#### Testing and Inference
+- `direct_interactive_test.py` - Interactive testing using direct ONNX Runtime (most reliable)
+- `interactive_test.py` - Interactive testing using Optimum integration
+- `diagnose_onnx_model.py` - Detailed diagnostic checks for model issues
+- `enhanced_onnx_inference.py` - Direct ONNX Runtime inference with diagnostics
+- `benchmark_model.py` - Performance benchmarking across different input sizes
+
+#### Execution Scripts
+- `run_inference_tests.ps1` - Comprehensive testing suite
+- `run_master_test.ps1` - Runs all tests in sequence
+
+#### Maintenance
+- `maintain.bat` - Central maintenance dashboard with menu options
+- `cleanup_simple.ps1` - Removes temporary files and Python cache
+
+## Common Issues and Solutions
+
+### 1. 'Logits' Error During Generation
+
+**Symptom**: `KeyError: 'logits'` or similar errors during model inference.
+
+**Solution**: The model was likely exported without position_ids input. Re-export the model with:
+```powershell
+python reexport_with_position_ids.py --model-id deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B --output-dir ./onnx_fixed
+```
+
+### 2. Model Loading Failures
+
+**Symptom**: Model fails to load or initialize.
+
+**Solution**: Try using different loading parameters:
+```python
+# For Qwen2-based models
+session_options = ort.SessionOptions()
+session_options.intra_op_num_threads = 4
+session = ort.InferenceSession(model_path, session_options)
+```
+
+### 3. Performance Issues
+
+**Symptom**: Slow inference or high memory usage.
+
+**Solution**: Adjust thread count to match your CPU cores:
+```powershell
+python benchmark_model.py --model-path ./model_path --num-threads 4  # Adjust to your CPU
+```
+
+## Configuration Options
+
+- **Thread Count**: Adjust `--num-threads` based on your CPU. Generally, setting it to the number of physical cores works best.
+- **Token Limit**: Use `--max-tokens` to control generation length.
+- **Model Path**: All scripts accept `--model-path` to specify the model location.
+
+## Resources
+
+- [ONNX Runtime Documentation](https://onnxruntime.ai/)
+- [Optimum Documentation](https://huggingface.co/docs/optimum/index)
+- [DeepSeek-R1 Model Card](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B)
+
+## License
+
+This project is provided for research and educational purposes. The DeepSeek models have their own licenses which should be respected when using them.
+
+## Contributing
+
+Contributions are welcome! See `CONTRIBUTING.md` for guidelines.
