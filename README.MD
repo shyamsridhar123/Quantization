@@ -99,7 +99,7 @@ Quantizing models provides these amazing benefits:
 ┌─────────────────────────────────────┐
 │ 🚀 8x Smaller File Size             │
 │ 💾 ~70-75% Less Memory Usage        │
-│ ⚡ Faster Inference Speed            │
+│ ⚡ Faster Inference Speed           │
 │ 🖥️ Run on Consumer Hardware         │
 │ 🔋 Lower Energy Consumption         │
 │ 🏠 Enable Edge & Local Deployment   │
@@ -194,7 +194,7 @@ Quantization in this repository follows this process:
 ┌─────────────────────────────────────────────┐
 │ 1. Export to ONNX                           │
 │    - Convert model architecture to ONNX     │
-│    - Add position_ids input (required fix) │
+│    - Add position_ids input (required fix)  │
 └─────────────────────────────────────────────┘
                          ⬇️
 ┌─────────────────────────────────────────────┐
