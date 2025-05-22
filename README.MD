@@ -344,6 +344,10 @@ Contributions are welcome! See `CONTRIBUTING.md` for guidelines. 🌟
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+## Disclaimer
+
+This project is for educational purposes only. The models and code provided are intended for research and learning, and should not be used in production environments without further testing and validation.
+
 ## Complete Workflow
 
 ### Step 1: Prepare Your Environment
