@@ -1,0 +1,143 @@
+{
+  "model_path": "./quantized_model/onnx_int4/model_quantized.onnx",
+  "num_threads": 4,
+  "max_tokens": 50,
+  "warmup_runs": 2,
+  "benchmark_runs": 5,
+  "prompts": {
+    "short": {
+      "text": "What is the capital of France?",
+      "tokens": 8,
+      "first_token_time": {
+        "mean": 0.08419971466064453,
+        "std": 0.00377214536531401,
+        "min": 0.08028721809387207,
+        "max": 0.08957195281982422,
+        "runs": [
+          0.08957195281982422,
+          0.08770608901977539,
+          0.08028721809387207,
+          0.08280086517333984,
+          0.08063244819641113
+        ]
+      }
+    },
+    "medium": {
+      "text": "Can you explain quantum computing in simple terms that a high school student would understand?",
+      "tokens": 17,
+      "first_token_time": {
+        "mean": 0.12116608619689942,
+        "std": 0.008224336534241258,
+        "min": 0.11145138740539551,
+        "max": 0.13351988792419434,
+        "runs": [
+          0.11707139015197754,
+          0.11583662033081055,
+          0.12795114517211914,
+          0.13351988792419434,
+          0.11145138740539551
+        ]
+      }
+    },
+    "long": {
+      "text": "Write a summary of the advantages and disadvantages of different deep learning frameworks, including PyTorch, TensorFlow, and JAX. Consider their ease of use, performance, community support, and deployment options.",
+      "tokens": 41,
+      "first_token_time": {
+        "mean": 0.2154003143310547,
+        "std": 0.017243132608383855,
+        "min": 0.20163822174072266,
+        "max": 0.24939894676208496,
+        "runs": [
+          0.20967698097229004,
+          0.24939894676208496,
+          0.20941901206970215,
+          0.20686841011047363,
+          0.20163822174072266
+        ]
+      }
+    }
+  },
+  "generation": {
+    "short": {
+      "mean_time": 8.350886154174805,
+      "mean_tokens": 50.0,
+      "tokens_per_second": 5.987388533012609,
+      "runs": [
+        {
+          "time": 8.31889820098877,
+          "tokens": 50
+        },
+        {
+          "time": 8.266985177993774,
+          "tokens": 50
+        },
+        {
+          "time": 8.331191539764404,
+          "tokens": 50
+        },
+        {
+          "time": 8.235334873199463,
+          "tokens": 50
+        },
+        {
+          "time": 8.602020978927612,
+          "tokens": 50
+        }
+      ]
+    },
+    "medium": {
+      "mean_time": 10.327359628677367,
+      "mean_tokens": 50.0,
+      "tokens_per_second": 4.841508555696877,
+      "runs": [
+        {
+          "time": 9.986874341964722,
+          "tokens": 50
+        },
+        {
+          "time": 10.195029497146606,
+          "tokens": 50
+        },
+        {
+          "time": 9.82351303100586,
+          "tokens": 50
+        },
+        {
+          "time": 10.9612455368042,
+          "tokens": 50
+        },
+        {
+          "time": 10.670135736465454,
+          "tokens": 50
+        }
+      ]
+    },
+    "long": {
+      "mean_time": 15.86486268043518,
+      "mean_tokens": 50.0,
+      "tokens_per_second": 3.151618832582828,
+      "runs": [
+        {
+          "time": 15.748389720916748,
+          "tokens": 50
+        },
+        {
+          "time": 16.123304843902588,
+          "tokens": 50
+        },
+        {
+          "time": 15.82559323310852,
+          "tokens": 50
+        },
+        {
+          "time": 15.777493953704834,
+          "tokens": 50
+        },
+        {
+          "time": 15.849531650543213,
+          "tokens": 50
+        }
+      ]
+    }
+  }
+}

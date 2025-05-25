@@ -1,0 +1,6 @@
+Sample,Type,Original_Accuracy,Quantized_Accuracy,Accuracy_Diff,Speedup,Similarity
+1,definition,0.762,0.415,-0.347,2.39,0.113
+2,explanation,0.631,0.504,-0.128,14.22,0.119
+3,explanation,0.525,0.525,0.000,2.46,0.179
+4,technical,0.556,0.606,0.050,6.48,0.081
+5,introduction,0.632,0.442,-0.190,0.64,0.136

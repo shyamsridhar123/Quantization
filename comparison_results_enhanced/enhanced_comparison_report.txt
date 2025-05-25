@@ -1,0 +1,378 @@
+====================================================================================================
+ENHANCED MODEL COMPARISON REPORT WITH ACCURACY METRICS
+====================================================================================================
+
+EXECUTIVE SUMMARY
+--------------------------------------------------
+Model Size Reduction: 78.1% (7752.1MB → 1701.1MB)
+Average Speedup: 5.24x
+Accuracy Retention: 80.2%
+Average Accuracy - Original: 62.14%, Quantized: 49.84%
+Output Similarity: 12.53%
+Tokens/Second - Original: 0.6, Quantized: 1.7
+
+DETAILED METRICS BY SAMPLE
+--------------------------------------------------
++-----+--------------+------------+-------------+-----------+---------+---------+---------+
+| #   | Type         | Orig Acc   | Quant Acc   | Similar   | Speed   |   O-Tok |   Q-Tok |
++=====+==============+============+=============+===========+=========+=========+=========+
+| S1  | definition   | 76.2%      | 41.5%       | 11.3%     | 2.4x    |      86 |     104 |
++-----+--------------+------------+-------------+-----------+---------+---------+---------+
+| S2  | explanation  | 63.1%      | 50.4%       | 11.9%     | 14.2x   |      91 |      92 |
++-----+--------------+------------+-------------+-----------+---------+---------+---------+
+| S3  | explanation  | 52.5%      | 52.5%       | 17.9%     | 2.5x    |      90 |      83 |
++-----+--------------+------------+-------------+-----------+---------+---------+---------+
+| S4  | technical    | 55.6%      | 60.6%       | 8.1%      | 6.5x    |     200 |     107 |
++-----+--------------+------------+-------------+-----------+---------+---------+---------+
+| S5  | introduction | 63.2%      | 44.2%       | 13.6%     | 0.6x    |      96 |     200 |
++-----+--------------+------------+-------------+-----------+---------+---------+---------+
+
+DETAILED RESULTS WITH FULL OUTPUTS
+--------------------------------------------------
+
+================================================================================
+SAMPLE 1: What is artificial intelligence?
+Type: definition
+================================================================================
+
+PERFORMANCE METRICS:
+  Speedup: 2.39x
+  Generation Time - Original: 136.77s, Quantized: 57.21s
+  Tokens Generated - Original: 86, Quantized: 104
+  Tokens/Second - Original: 0.6, Quantized: 1.8
+  Output Similarity: 11.25%
+
+ACCURACY METRICS:
+  Original Model:
+    - word_count: 76
+    - sentence_count: 6
+    - avg_sentence_length: 12.667
+    - keyword_coverage: 0.750
+    - keywords_found: 6
+    - keyword_distribution: 0.171
+    - concept_coverage: 0.250
+    - relevance_score: 1.000
+    - sentence_coherence: 0.833
+    - lexical_diversity: 0.711
+    - completeness_score: 1.000
+    - factual_score: 1.000
+    - overall_accuracy: 0.762
+
+  Quantized Model:
+    - word_count: 84
+    - sentence_count: 10
+    - avg_sentence_length: 8.400
+    - keyword_coverage: 0.000
+    - keywords_found: 0
+    - keyword_distribution: 0
+    - concept_coverage: 0.000
+    - relevance_score: 0.500
+    - sentence_coherence: 0.900
+    - lexical_diversity: 0.643
+    - completeness_score: 0.700
+    - factual_score: 1.000
+    - overall_accuracy: 0.415
+
+ORIGINAL MODEL OUTPUT:
+----------------------------------------
+What is artificial intelligence? What is the difference between AI and machine learning? Explain.
+Okay, so I need to figure out what artificial intelligence is. From the definition provided in my notes: AI refers to a computer system that can perform tasks typically associated with human intelligence, like learning and problem-solving. It's about creating machines that can think in a way similar to humans.
+
+Now, the second part is asking for the difference between AI and machine learning.
+
+QUANTIZED MODEL OUTPUT:
+----------------------------------------
+What is artificial intelligence? What are its major...
+What is the relationship between...? (Please provide a step-by...
+The question I need to answer: What is the relationship between...? (Please provide a step-by-step explanation.)
+The user mentioned to use LaTeX notation in their answers, but I'm not sure how to apply that here. Should it be placed within \[ ... \] or something?
+I need to figure out what the user is asking for.
+
+The original question seems to be about AI and its relationship with other concepts.
+
+
+================================================================================
+SAMPLE 2: Explain how photosynthesis works in plants.
+Type: explanation
+================================================================================
+
+PERFORMANCE METRICS:
+  Speedup: 14.22x
+  Generation Time - Original: 693.17s, Quantized: 48.75s
+  Tokens Generated - Original: 91, Quantized: 92
+  Tokens/Second - Original: 0.1, Quantized: 1.9
+  Output Similarity: 11.86%
+
+ACCURACY METRICS:
+  Original Model:
+    - word_count: 67
+    - sentence_count: 6
+    - avg_sentence_length: 11.167
+    - keyword_coverage: 0.625
+    - keywords_found: 5
+    - keyword_distribution: 0.155
+    - concept_coverage: 0.000
+    - relevance_score: 0.500
+    - sentence_coherence: 1.000
+    - lexical_diversity: 0.493
+    - completeness_score: 1.000
+    - factual_score: 1.000
+    - overall_accuracy: 0.631
+
+  Quantized Model:
+    - word_count: 71
+    - sentence_count: 7
+    - avg_sentence_length: 10.143
+    - keyword_coverage: 0.000
+    - keywords_found: 0
+    - keyword_distribution: 0
+    - concept_coverage: 0.000
+    - relevance_score: 0.833
+    - sentence_coherence: 0.857
+    - lexical_diversity: 0.620
+    - completeness_score: 1.000
+    - factual_score: 1.000
+    - overall_accuracy: 0.504
+
+ORIGINAL MODEL OUTPUT:
+----------------------------------------
+Explain how photosynthesis works in plants. Include the term 'chlorophyll' in your explanation.
+Include any other relevant terms or concepts from photosynthesis.
+
+Photosynthesis is the process by which plants convert carbon dioxide and water into glucose and oxygen. The overall equation for photosynthesis is 2H₂O + CO₂ → Glucose + Oxygen.
+
+Include any other relevant terms or concepts from photosynthesis.
+Photosynthesis is the process by which plants convert carbon dioxide and water into glucose and oxygen.
+
+QUANTIZED MODEL OUTPUT:
+----------------------------------------
+Explain how photosynthesis works in plants. Specifically, why is the process called " photosynthesis" and what are its main characteristics? 
+
+Also, explain how it relates to carbon cycles.
+Okay, so I have this question about photosynthesis in plants. It's asking why it's called "photosynthesis," what its main characteristics are, and how it relates to the carbon cycles. Hmm... Let me think through this step by step.
+
+First off, I need to understand what photosynthesis really is.
+
+
+================================================================================
+SAMPLE 3: What are the main causes of climate change?
+Type: explanation
+================================================================================
+
+PERFORMANCE METRICS:
+  Speedup: 2.46x
+  Generation Time - Original: 112.08s, Quantized: 45.54s
+  Tokens Generated - Original: 90, Quantized: 83
+  Tokens/Second - Original: 0.8, Quantized: 1.8
+  Output Similarity: 17.88%
+
+ACCURACY METRICS:
+  Original Model:
+    - word_count: 76
+    - sentence_count: 8
+    - avg_sentence_length: 9.500
+    - keyword_coverage: 0.125
+    - keywords_found: 1
+    - keyword_distribution: 0.000
+    - concept_coverage: 0.000
+    - relevance_score: 0.625
+    - sentence_coherence: 1.000
+    - lexical_diversity: 0.750
+    - completeness_score: 1.000
+    - factual_score: 1.000
+    - overall_accuracy: 0.525
+
+  Quantized Model:
+    - word_count: 66
+    - sentence_count: 7
+    - avg_sentence_length: 9.429
+    - keyword_coverage: 0.125
+    - keywords_found: 1
+    - keyword_distribution: 0.000
+    - concept_coverage: 0.000
+    - relevance_score: 0.625
+    - sentence_coherence: 1.000
+    - lexical_diversity: 0.697
+    - completeness_score: 1.000
+    - factual_score: 1.000
+    - overall_accuracy: 0.525
+
+ORIGINAL MODEL OUTPUT:
+----------------------------------------
+What are the main causes of climate change? I know that CO2 is one, but what about others?
+I also heard of the greenhouse effect. So maybe it's part of CO2 causing more harm? Or is that a separate cause?
+
+Additionally, I've heard terms like feedback loops and positive/negative feedback. How do these apply to climate change?
+
+Another thing is the water cycle. I know it's important for life on Earth, but does it play a role in climate change?
+
+QUANTIZED MODEL OUTPUT:
+----------------------------------------
+What are the main causes of climate change? I know that the primary factors are CO2, O3, and SO. But then why aren't we seeing significant changes? I mean the primary factors are CO2, O3 and SO but yet no...
+
+Wait, perhaps they aren't the main factors. Maybe it's something else... I need to figure this out.
+
+So, my understanding is that climate change is primarily caused by the CO2 emissions.
+
+
+================================================================================
+SAMPLE 4: Describe the process of machine learning model training.
+Type: technical
+================================================================================
+
+PERFORMANCE METRICS:
+  Speedup: 6.48x
+  Generation Time - Original: 407.48s, Quantized: 62.91s
+  Tokens Generated - Original: 200, Quantized: 107
+  Tokens/Second - Original: 0.5, Quantized: 1.7
+  Output Similarity: 8.12%
+
+ACCURACY METRICS:
+  Original Model:
+    - word_count: 175
+    - sentence_count: 10
+    - avg_sentence_length: 17.500
+    - keyword_coverage: 0.250
+    - keywords_found: 2
+    - keyword_distribution: 0.003
+    - concept_coverage: 0.000
+    - relevance_score: 0.625
+    - sentence_coherence: 1.000
+    - lexical_diversity: 0.166
+    - completeness_score: 1.000
+    - factual_score: 1.000
+    - overall_accuracy: 0.556
+
+  Quantized Model:
+    - word_count: 85
+    - sentence_count: 6
+    - avg_sentence_length: 14.167
+    - keyword_coverage: 0.375
+    - keywords_found: 3
+    - keyword_distribution: 0.048
+    - concept_coverage: 0.000
+    - relevance_score: 0.750
+    - sentence_coherence: 1.000
+    - lexical_diversity: 0.694
+    - completeness_score: 1.000
+    - factual_score: 1.000
+    - overall_accuracy: 0.606
+
+ORIGINAL MODEL OUTPUT:
+----------------------------------------
+Describe the process of machine learning model training. What is the difference between machine learning model training and deep learning? Explain why a neural network based approach to model building is better than other approaches.
+
+Also, for this question: Explain why a neural network based approach to model building is better than other approaches.
+
+Additionally, for this question: Explain why a neural network based approach to model building is better than other approaches.
+
+Additionally, for this question: Explain why a neural network based approach to model building is better than other approaches.
+
+Additionally, for this question: Explain why a neural network based approach to model building is better than other approaches.
+
+Additionally, for this question: Explain why a neural network based approach to model building is better than other approaches.
+
+Additionally, for this question: Explain why a neural network based approach to model building is better than other approaches.
+
+Additionally, for this question: Explain why a neural network based approach to model building is better than other approaches.
+
+Additionally, for this question: Explain why a neural network based approach to model building is
+
+QUANTIZED MODEL OUTPUT:
+----------------------------------------
+Describe the process of machine learning model training. Start with the initial steps, then detail each step of the process.
+The process should include: (a) data collection and preprocessing, (b) model selection and training, (c) evaluation and monitoring. For each step, describe the key actions or processes involved in that step.
+The description should be detailed but concise and avoid using any markdown. Just write the process in a linear, step-by-step manner as if it were an essay.
+**Step 1: Data Collection and Processing**
+
+I need to start with data collection.
+
+
+================================================================================
+SAMPLE 5: Write a brief introduction to Python programming.
+Type: introduction
+================================================================================
+
+PERFORMANCE METRICS:
+  Speedup: 0.64x
+  Generation Time - Original: 105.89s, Quantized: 166.30s
+  Tokens Generated - Original: 96, Quantized: 200
+  Tokens/Second - Original: 0.9, Quantized: 1.2
+  Output Similarity: 13.56%
+
+ACCURACY METRICS:
+  Original Model:
+    - word_count: 81
+    - sentence_count: 7
+    - avg_sentence_length: 11.571
+    - keyword_coverage: 0.500
+    - keywords_found: 4
+    - keyword_distribution: 0.051
+    - concept_coverage: 0.000
+    - relevance_score: 0.714
+    - sentence_coherence: 1.000
+    - lexical_diversity: 0.765
+    - completeness_score: 1.000
+    - factual_score: 1.000
+    - overall_accuracy: 0.632
+
+  Quantized Model:
+    - word_count: 82
+    - sentence_count: 15
+    - avg_sentence_length: 5.467
+    - keyword_coverage: 0.125
+    - keywords_found: 1
+    - keyword_distribution: 0.000
+    - concept_coverage: 0.000
+    - relevance_score: 0.571
+    - sentence_coherence: 0.800
+    - lexical_diversity: 0.573
+    - completeness_score: 0.700
+    - factual_score: 1.000
+    - overall_accuracy: 0.442
+
+ORIGINAL MODEL OUTPUT:
+----------------------------------------
+Write a brief introduction to Python programming. Explain the introduction by mentioning how Python is different from other programming languages.
+Include an example of code that demonstrates this concept, and explain it in the introduction.
+
+Additionally, I need to mention at least 3 programming languages that are known for their unique features or strengths.
+I should use the markdown formatting as specified. The introduction is 2 paragraphs, each paragraph containing about 5 sentences.
+
+Alright, let's get started.
+Okay, I need to write an introduction to Python programming.
+
+QUANTIZED MODEL OUTPUT:
+----------------------------------------
+Write a brief introduction to Python programming. What is Python?
+
+After this introduction, I can learn about:
+
+- **Data types**: 
+   - Intuition: [ ] is a list of integers
+   ...
+- **Variables**:
+  - How to create variables in Python.
+- **Basic operations**: 
+   - Addition: [1 + 2] = ?
+   - Subtraction: [3-4]=?
+   - Multiplication: [2*3] = ?
+   - Division: [6/4]=?
+- **Order of operations**: 
+   - Which, then ?, then ?
+- **Practice questions**:
+  - [1+2] is equal to?
+   - 
+  + ... etc.
+
+**After this introduction, I can learn about:
+- **List types**: 
+  - Intuition: [ ] is a list of integers
+   ...
+- **Creating variables**: 
+  - How to create variable in Python.
+- **Loop****
+   - How loops works
+ (for, while
+
+
